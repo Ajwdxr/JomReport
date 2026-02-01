@@ -1,5 +1,6 @@
 import { supabase } from "../api/supabase.js";
 import { reportService } from "../api/reports.js";
+import { sanitizeHTML } from '../utils/security.js';
 
 export default class Home {
   constructor(app) {
@@ -15,7 +16,7 @@ export default class Home {
                         <div class="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
                             <i class="ri-megaphone-fill text-xl"></i>
                         </div>
-                        <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-emerald-600">JomReport</span>
+                        <span class="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-emerald-600 tracking-tighter">JomReport</span>
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="flex flex-col items-end">
@@ -165,12 +166,12 @@ export default class Home {
                             </span>
                             <span class="text-[10px] font-black ${this.getStatusColor(report.status)} uppercase tracking-widest px-3 py-1 rounded-lg border border-current opacity-80">${report.status}</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-indigo-600 transition-colors">${report.title}</h3>
-                        <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed font-medium">${report.description}</p>
+                        <h3 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-indigo-600 transition-colors">${sanitizeHTML(report.title)}</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed font-medium">${sanitizeHTML(report.description)}</p>
                         <div class="flex items-center justify-between pt-4 border-t border-gray-50">
                             <div class="flex items-center gap-2">
                                 <img src="${report.profiles?.avatar_url || ""}" class="h-7 w-7 rounded-full bg-gray-200">
-                                <span class="text-xs font-bold text-gray-700">${report.profiles?.name || "User"}</span>
+                                <span class="text-xs font-bold text-gray-700">${sanitizeHTML(report.profiles?.name || 'User')}</span>
                             </div>
                             <div class="flex items-center gap-1 text-gray-400 text-xs font-semibold">
                                 <i class="ri-calendar-line text-xs"></i>
