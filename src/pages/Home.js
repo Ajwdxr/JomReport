@@ -10,20 +10,23 @@ export default class Home {
 
   async render() {
     return `
-            <div class="pb-24">
-                <nav class="sticky top-0 z-50 glass px-6 py-4 flex items-center justify-between border-b border-gray-100">
+            <div class="pb-24 min-h-screen bg-gray-50 dark:bg-slate-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                <nav class="sticky top-0 z-50 glass dark:bg-slate-900/70 px-6 py-4 flex items-center justify-between border-b border-gray-100 dark:border-slate-800">
                     <div class="flex items-center gap-3">
-                        <div class="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                        <div class="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200 dark:shadow-none">
                             <i class="ri-megaphone-fill text-xl"></i>
                         </div>
                         <span class="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-emerald-600 tracking-tighter">JomReport</span>
                     </div>
                     <div class="flex items-center gap-4">
+                        <button id="theme-toggle" class="p-2 rounded-xl bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-yellow-400 hover:scale-110 active:scale-95 transition-all">
+                            <i class="${this.app.theme === 'dark' ? 'ri-sun-fill' : 'ri-moon-fill'} text-xl"></i>
+                        </button>
                         <div class="flex flex-col items-end">
-                            <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest leading-none">Mata</span>
-                            <span id="user-points" class="text-lg font-black text-indigo-600 leading-tight">${this.points}</span>
+                            <span class="text-[10px] font-black text-indigo-400 dark:text-indigo-300 uppercase tracking-widest leading-none">Mata</span>
+                            <span id="user-points" class="text-lg font-black text-indigo-600 dark:text-indigo-400 leading-tight">${this.points}</span>
                         </div>
-                        <div class="h-10 w-10 rounded-full border-2 border-white shadow-sm overflow-hidden cursor-pointer bg-gray-100" id="profile-btn">
+                        <div class="h-10 w-10 rounded-full border-2 border-white dark:border-slate-700 shadow-sm overflow-hidden cursor-pointer bg-gray-100 dark:bg-slate-800" id="profile-btn">
                             <img src="${this.app.user?.user_metadata?.avatar_url || ""}" alt="Avatar" class="h-full w-full object-cover">
                         </div>
                         <button id="logout-btn" class="text-gray-400 hover:text-red-500 transition-colors">
@@ -34,27 +37,27 @@ export default class Home {
 
                 <main class="max-w-2xl mx-auto px-6 py-8 space-y-8">
                     <header class="space-y-2">
-                        <h2 class="text-3xl font-extrabold text-gray-900 leading-tight">Suaramu, <br><span class="text-primary text-4xl">Tindakan Kami.</span></h2>
-                        <p class="text-gray-500 font-medium">Lihat apa yang berlaku di kawasan anda.</p>
+                        <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white leading-tight">Suaramu, <br><span class="text-primary dark:text-indigo-400 text-4xl">Tindakan Kami.</span></h2>
+                        <p class="text-gray-500 dark:text-gray-400 font-medium">Lihat apa yang berlaku di kawasan anda.</p>
                     </header>
 
                     <div class="flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
-                        <button class="bg-indigo-600 text-white px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-indigo-100 shrink-0 flex items-center gap-2">
+                        <button class="bg-indigo-600 text-white px-6 py-2.5 rounded-2xl font-bold shadow-lg shadow-indigo-100 dark:shadow-none shrink-0 flex items-center gap-2">
                             <i class="ri-apps-fill"></i> Semua
                         </button>
-                        <button class="bg-white text-gray-600 px-6 py-2.5 rounded-2xl font-bold border border-gray-100 shrink-0 hover:bg-gray-50 transition-colors flex items-center gap-2">
+                        <button class="bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 px-6 py-2.5 rounded-2xl font-bold border border-gray-100 dark:border-slate-800 shrink-0 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
                             <i class="ri-time-line"></i> Baru
                         </button>
-                        <button class="bg-white text-gray-600 px-6 py-2.5 rounded-2xl font-bold border border-gray-100 shrink-0 hover:bg-gray-50 transition-colors flex items-center gap-2">
+                        <button class="bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 px-6 py-2.5 rounded-2xl font-bold border border-gray-100 dark:border-slate-800 shrink-0 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
                             <i class="ri-loader-2-line"></i> Proses
                         </button>
-                        <button class="bg-white text-gray-600 px-6 py-2.5 rounded-2xl font-bold border border-gray-100 shrink-0 hover:bg-gray-50 transition-colors flex items-center gap-2">
+                        <button class="bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-400 px-6 py-2.5 rounded-2xl font-bold border border-gray-100 dark:border-slate-800 shrink-0 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2">
                             <i class="ri-checkbox-circle-line"></i> Selesai
                         </button>
                     </div>
 
                     <div id="feed" class="space-y-6">
-                        <div class="flex flex-col items-center justify-center p-12 text-gray-400">
+                        <div class="flex flex-col items-center justify-center p-12 text-gray-400 dark:text-gray-600">
                              <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mb-4"></div>
                              <p>Memuatkan aduan...</p>
                         </div>
@@ -62,17 +65,17 @@ export default class Home {
                 </main>
 
                 <!-- Bottom Navigation -->
-                <div class="fixed bottom-0 left-0 right-0 glass border-t border-gray-100 px-10 py-4 flex justify-between items-center z-50 rounded-t-[32px]">
-                    <button class="text-indigo-600 flex flex-col items-center gap-1" onclick="window.app.navigateTo('/')">
+                <div class="fixed bottom-0 left-0 right-0 glass dark:bg-slate-900/80 border-t border-gray-100 dark:border-slate-800 px-10 py-4 flex justify-between items-center z-50 rounded-t-[32px]">
+                    <button class="text-indigo-600 dark:text-indigo-400 flex flex-col items-center gap-1" onclick="window.app.navigateTo('/')">
                         <i class="ri-home-5-fill text-2xl"></i>
                         <span class="text-[10px] font-bold uppercase tracking-tighter">Utama</span>
                     </button>
                     
-                    <button id="add-btn" class="bg-indigo-600 text-white w-14 h-14 rounded-2xl shadow-2xl shadow-indigo-300 -mt-14 transition-all hover:scale-110 active:scale-95 flex items-center justify-center border-4 border-white">
+                    <button id="add-btn" class="bg-indigo-600 text-white w-14 h-14 rounded-2xl shadow-2xl shadow-indigo-300 dark:shadow-indigo-900/50 -mt-14 transition-all hover:scale-110 active:scale-95 flex items-center justify-center border-4 border-white dark:border-slate-900">
                         <i class="ri-add-line text-3xl font-bold"></i>
                     </button>
 
-                    <button class="text-gray-400 flex flex-col items-center gap-1" onclick="window.app.navigateTo('/admin')">
+                    <button class="text-gray-400 dark:text-gray-500 flex flex-col items-center gap-1" onclick="window.app.navigateTo('/admin')">
                         <i class="ri-shield-user-line text-2xl"></i>
                         <span class="text-[10px] font-bold uppercase tracking-tighter">Admin</span>
                     </button>
@@ -82,6 +85,21 @@ export default class Home {
   }
 
   async afterRender() {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.onclick = () => {
+                if (window.app && typeof window.app.toggleTheme === 'function') {
+                    window.app.toggleTheme();
+                    this.render().then(html => {
+                        this.app.appElement.innerHTML = html;
+                        this.afterRender();
+                    });
+                } else {
+                    console.error('toggleTheme function missing on global app instance');
+                }
+            };
+        }
+
     const logoutBtn = document.getElementById("logout-btn");
     if (logoutBtn) {
       logoutBtn.addEventListener("click", async () => {
@@ -150,7 +168,7 @@ export default class Home {
       feedContainer.innerHTML = reports
         .map(
           (report) => `
-                <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer report-card group" data-id="${report.id}">
+                <div class="bg-white dark:bg-slate-900 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer report-card group" data-id="${report.id}">
                     ${
                       report.image_url
                         ? `
@@ -161,19 +179,19 @@ export default class Home {
                     }
                     <div class="p-6 space-y-4">
                         <div class="flex justify-between items-start">
-                            <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black rounded-lg uppercase tracking-widest flex items-center gap-1">
+                            <span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[10px] font-black rounded-lg uppercase tracking-widest flex items-center gap-1">
                                 <i class="ri-price-tag-3-line text-xs"></i> ${report.category}
                             </span>
                             <span class="text-[10px] font-black ${this.getStatusColor(report.status)} uppercase tracking-widest px-3 py-1 rounded-lg border border-current opacity-80">${report.status}</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 leading-tight group-hover:text-indigo-600 transition-colors">${sanitizeHTML(report.title)}</h3>
-                        <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed font-medium">${sanitizeHTML(report.description)}</p>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-50">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">${sanitizeHTML(report.title)}</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 leading-relaxed font-medium">${sanitizeHTML(report.description)}</p>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-50 dark:border-slate-800">
                             <div class="flex items-center gap-2">
-                                <img src="${report.profiles?.avatar_url || ""}" class="h-7 w-7 rounded-full bg-gray-200">
-                                <span class="text-xs font-bold text-gray-700">${sanitizeHTML(report.profiles?.name || 'User')}</span>
+                                <img src="${report.profiles?.avatar_url || ""}" class="h-7 w-7 rounded-full bg-gray-200 dark:bg-slate-700">
+                                <span class="text-xs font-bold text-gray-700 dark:text-gray-300">${sanitizeHTML(report.profiles?.name || 'User')}</span>
                             </div>
-                            <div class="flex items-center gap-1 text-gray-400 text-xs font-semibold">
+                            <div class="flex items-center gap-1 text-gray-400 dark:text-gray-500 text-xs font-semibold">
                                 <i class="ri-calendar-line text-xs"></i>
                                 <span>${new Date(report.created_at).toLocaleDateString()}</span>
                             </div>

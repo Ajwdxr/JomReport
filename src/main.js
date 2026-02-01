@@ -11,10 +11,14 @@ const routes = {
 class App {
     constructor() {
         this.appElement = document.getElementById('app');
+        // Bind methods to ensure 'this' context is preserved and methods are available
+        this.initTheme = this.initTheme.bind(this);
+        this.toggleTheme = this.toggleTheme.bind(this);
         this.init();
     }
 
     async init() {
+        this.initTheme();
         const { data: { session } } = await supabase.auth.getSession();
         this.user = session?.user || null;
 
@@ -25,6 +29,21 @@ class App {
 
         window.addEventListener('hashchange', () => this.render());
         this.render();
+    }
+
+    initTheme() {
+        this.theme = localStorage.getItem('theme') || 'light';
+        if (this.theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }
+
+    toggleTheme() {
+        this.theme = this.theme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', this.theme);
+        this.initTheme();
     }
 
     navigateTo(path) {

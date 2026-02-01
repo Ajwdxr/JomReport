@@ -28,40 +28,40 @@ export default class Admin {
         }
 
         return `
-            <div class="min-h-screen bg-gray-50">
-                <nav class="sticky top-0 z-50 bg-white px-8 py-4 flex items-center justify-between border-b border-gray-200">
+            <div class="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors duration-300">
+                <nav class="sticky top-0 z-50 bg-white dark:bg-slate-900 px-8 py-4 flex items-center justify-between border-b border-gray-200 dark:border-slate-800">
                     <div class="flex items-center gap-3">
                          <div class="h-8 w-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xs">AD</div>
-                         <h1 class="text-lg font-extrabold text-gray-900 tracking-tight">Admin<span class="text-indigo-600">Dashboard</span></h1>
+                         <h1 class="text-lg font-extrabold text-gray-900 dark:text-white tracking-tight">Admin<span class="text-indigo-600">Dashboard</span></h1>
                     </div>
-                    <button onclick="app.navigateTo('/')" class="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors">Keluar</button>
+                    <button onclick="window.app.navigateTo('/')" class="text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Keluar</button>
                 </nav>
 
                 <main class="p-8 max-w-6xl mx-auto space-y-8">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-1">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Jumlah Aduan</p>
-                            <h2 id="total-reports" class="text-3xl font-black text-gray-900">...</h2>
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm space-y-1">
+                            <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Jumlah Aduan</p>
+                            <h2 id="total-reports" class="text-3xl font-black text-gray-900 dark:text-white">...</h2>
                         </div>
-                        <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-1">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Aduan Aktif</p>
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm space-y-1">
+                            <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Aduan Aktif</p>
                             <h2 id="active-reports" class="text-3xl font-black text-orange-500">...</h2>
                         </div>
-                        <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-1">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Selesai</p>
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm space-y-1">
+                            <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Selesai</p>
                             <h2 id="closed-reports" class="text-3xl font-black text-emerald-500">...</h2>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
-                        <div class="px-8 py-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-                            <h3 class="font-bold text-gray-900">Senarai Aduan Terkini</h3>
-                            <button class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-4 py-2 rounded-lg">Refresh</button>
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-gray-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-8 py-6 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between bg-gray-50/50 dark:bg-slate-800/50">
+                            <h3 class="font-bold text-gray-900 dark:text-white">Senarai Aduan Terkini</h3>
+                            <button class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 rounded-lg">Refresh</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="text-xs font-bold text-gray-400 uppercase tracking-widest bg-gray-50/50 border-b border-gray-100">
+                                    <tr class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest bg-gray-50/50 dark:bg-slate-800/50 border-b border-gray-100 dark:border-slate-800">
                                         <th class="px-8 py-4">Aduan</th>
                                         <th class="px-8 py-4">Status</th>
                                         <th class="px-8 py-4">Kategori</th>
@@ -94,18 +94,18 @@ export default class Admin {
             document.getElementById('closed-reports').textContent = reports.filter(r => r.status === 'closed').length;
 
             table.innerHTML = reports.map(report => `
-                <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                <tr class="border-b border-gray-50 dark:border-slate-800 hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors">
                     <td class="px-8 py-6">
                         <div class="flex items-center gap-4">
-                            ${report.image_url ? `<img src="${report.image_url}" class="h-10 w-10 rounded-lg object-cover">` : '<div class="h-10 w-10 bg-gray-100 rounded-lg"></div>'}
+                            ${report.image_url ? `<img src="${report.image_url}" class="h-10 w-10 rounded-lg object-cover">` : '<div class="h-10 w-10 bg-gray-100 dark:bg-slate-800 rounded-lg"></div>'}
                             <div>
-                                <p class="font-bold text-gray-900 line-clamp-1">${report.title}</p>
-                                <p class="text-xs text-gray-400 font-medium italic">oleh ${report.profiles?.name || 'User'}</p>
+                                <p class="font-bold text-gray-900 dark:text-white line-clamp-1">${report.title}</p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500 font-medium italic">oleh ${report.profiles?.name || 'User'}</p>
                             </div>
                         </div>
                     </td>
                     <td class="px-8 py-6">
-                        <select class="status-select bg-gray-50 border-none rounded-lg px-3 py-2 text-xs font-bold uppercase tracking-wider outline-none focus:ring-2 focus:ring-indigo-500" 
+                        <select class="status-select bg-gray-50 dark:bg-slate-800 border-none rounded-lg px-3 py-2 text-xs font-bold dark:text-gray-200 uppercase tracking-wider outline-none focus:ring-2 focus:ring-indigo-500" 
                             data-id="${report.id}">
                             <option value="open" ${report.status === 'open' ? 'selected' : ''}>Open</option>
                             <option value="acknowledged" ${report.status === 'acknowledged' ? 'selected' : ''}>Acknowledged</option>
@@ -114,7 +114,7 @@ export default class Admin {
                         </select>
                     </td>
                     <td class="px-8 py-6">
-                         <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black rounded-lg uppercase tracking-widest">${report.category}</span>
+                         <span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[10px] font-black rounded-lg uppercase tracking-widest">${report.category}</span>
                     </td>
                     <td class="px-8 py-6">
                         <div class="flex gap-2">
