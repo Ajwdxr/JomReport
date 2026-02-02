@@ -1,12 +1,11 @@
 const CACHE_NAME = "jom-report-v1";
 const ASSETS_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/src/main.js",
-  "https://cdn.tailwindcss.com",
-  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2",
-  "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap",
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./src/main.js",
+  "./icons/icon-192x192.png",
+  "./icons/icon-512x512.png"
 ];
 
 self.addEventListener("install", (event) => {

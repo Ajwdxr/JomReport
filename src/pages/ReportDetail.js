@@ -5,8 +5,14 @@ import { gamificationService } from '../api/gamification.js';
 export default class ReportDetail {
     constructor(app) {
         this.app = app;
-        const params = new URLSearchParams(window.location.search);
+        const hash = window.location.hash;
+        const queryIndex = hash.indexOf('?');
+        const search = queryIndex !== -1 ? hash.substring(queryIndex) : '';
+        const params = new URLSearchParams(search);
         this.reportId = params.get('id');
+        
+        // Debug logging
+        console.log('ReportDetail Debug:', { hash, queryIndex, search, reportId: this.reportId });
     }
 
     async render() {
@@ -57,10 +63,12 @@ export default class ReportDetail {
         const followBtn = document.getElementById('follow-btn');
         
         if (isFollowing) {
-            followBtn.innerHTML = `<i class="ri-notification-off-line text-lg"></i> Diikuti`;
-            followBtn.classList.remove('bg-indigo-50', 'text-indigo-600');
-            followBtn.classList.add('bg-gray-100', 'text-gray-500');
-            followBtn.disabled = true;
+            followBtn.innerHTML = `<i class="ri-notification-off-line text-lg"></i> Nyahikut`;
+            followBtn.classList.remove('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900/30', 'dark:text-indigo-400');
+            followBtn.classList.add('bg-red-50', 'text-red-500', 'dark:bg-red-900/30', 'dark:text-red-400');
+            followBtn.dataset.following = 'true';
+        } else {
+            followBtn.dataset.following = 'false';
         }
 
         container.innerHTML = `
@@ -143,14 +151,26 @@ export default class ReportDetail {
         const commentForm = document.getElementById('comment-form');
 
         followBtn.addEventListener('click', async () => {
+            const isCurrentlyFollowing = followBtn.dataset.following === 'true';
+            
             try {
-                await reportService.followReport(this.reportId);
-                followBtn.innerHTML = `<i class="ri-notification-off-line text-lg"></i> Diikuti`;
-                followBtn.classList.remove('bg-indigo-50', 'text-indigo-600');
-                followBtn.classList.add('bg-gray-100', 'text-gray-500');
-                followBtn.disabled = true;
+                if (isCurrentlyFollowing) {
+                    // Unfollow
+                    await reportService.unfollowReport(this.reportId);
+                    followBtn.innerHTML = `<i class="ri-notification-3-line text-lg"></i> Ikuti`;
+                    followBtn.classList.remove('bg-red-50', 'text-red-500', 'dark:bg-red-900/30', 'dark:text-red-400');
+                    followBtn.classList.add('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900/30', 'dark:text-indigo-400');
+                    followBtn.dataset.following = 'false';
+                } else {
+                    // Follow
+                    await reportService.followReport(this.reportId);
+                    followBtn.innerHTML = `<i class="ri-notification-off-line text-lg"></i> Nyahikut`;
+                    followBtn.classList.remove('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900/30', 'dark:text-indigo-400');
+                    followBtn.classList.add('bg-red-50', 'text-red-500', 'dark:bg-red-900/30', 'dark:text-red-400');
+                    followBtn.dataset.following = 'true';
+                }
             } catch (error) {
-                alert('Gagal mengikuti aduan.');
+                alert(isCurrentlyFollowing ? 'Gagal nyahikut aduan.' : 'Gagal mengikuti aduan.');
             }
         });
 

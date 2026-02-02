@@ -104,6 +104,17 @@ export const reportService = {
         return data.length > 0;
     },
 
+    async unfollowReport(reportId) {
+        const { data: { user } } = await supabase.auth.getUser();
+        const { error } = await supabase
+            .from('report_followers')
+            .delete()
+            .eq('report_id', reportId)
+            .eq('user_id', user.id);
+        if (error) throw error;
+        return true;
+    },
+
     async addUpdate(reportId, content) {
         const { data: { user } } = await supabase.auth.getUser();
         const { data, error } = await supabase

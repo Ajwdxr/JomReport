@@ -96,16 +96,50 @@ CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.
 
 -- Policies for Reports
 CREATE POLICY "Reports are viewable by everyone" ON reports FOR SELECT USING (true);
-CREATE POLICY "Authenticated users can create reports" ON reports FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Users can create their own reports" ON reports FOR INSERT WITH CHECK (
+  auth.uid() = user_id AND auth.role() = 'authenticated'
+);
 CREATE POLICY "Admins can update all reports" ON reports FOR UPDATE USING (
   EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
 );
 
 -- Policies for Updates/Comments
-CREATE POLICY "Updates/Comments viewable by everyone" ON report_updates FOR SELECT USING (true);
-CREATE POLICY "Updates/Comments viewable by everyone" ON comments FOR SELECT USING (true);
-CREATE POLICY "Authenticated users can post comments" ON comments FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Updates viewable by everyone" ON report_updates FOR SELECT USING (true);
+CREATE POLICY "Users can add updates" ON report_updates FOR INSERT WITH CHECK (
+  auth.uid() = user_id AND auth.role() = 'authenticated'
+);
+CREATE POLICY "Comments viewable by everyone" ON comments FOR SELECT USING (true);
+CREATE POLICY "Users can post own comments" ON comments FOR INSERT WITH CHECK (
+  auth.uid() = user_id AND auth.role() = 'authenticated'
+);
 
 -- Policies for Followers
 CREATE POLICY "Followers viewable by everyone" ON report_followers FOR SELECT USING (true);
-CREATE POLICY "Users can follow reports" ON report_followers FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Users can follow reports" ON report_followers FOR INSERT WITH CHECK (
+  auth.uid() = user_id AND auth.role() = 'authenticated'
+);
+CREATE POLICY "Users can unfollow reports" ON report_followers FOR DELETE USING (
+  auth.uid() = user_id
+);
+-- 10. STORAGE POLICIES (For 'report-images' bucket)
+-- Run these if you are getting "new row violates row-level security policy" errors on upload
+
+-- Ensure bucket exists and is public
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('report-images', 'report-images', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+-- Allow public access to images
+CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'report-images');
+
+-- Allow authenticated users to upload images
+CREATE POLICY "Authenticated users can upload images" ON storage.objects FOR INSERT WITH CHECK (
+  bucket_id = 'report-images' AND 
+  auth.role() = 'authenticated'
+);
+
+-- Allow users to delete their own images
+CREATE POLICY "Users can delete own images" ON storage.objects FOR DELETE USING (
+  bucket_id = 'report-images' AND 
+  (storage.foldername(name))[1] = auth.uid()::text
+);
