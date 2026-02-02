@@ -14,25 +14,24 @@
     <meta name="theme-color" content="#4f46e5" />
     <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
 
-    <!-- Tailwind Play CDN (For rapid development without Node) -->
-    <script src="https://cdn.tailwindcss.com" crossorigin></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: "#4f46e5",
-              secondary: "#10b981",
-              accent: "#f59e0b",
-            },
-          },
-        },
-      };
-    </script>
-    <style>
+    <!-- Tailwind CSS via unpkg (Production-ready with CORS support) -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @custom-variant dark (&:where(.dark, .dark *));
+      @theme {
+        --color-primary: #4f46e5;
+        --color-secondary: #10b981;
+        --color-accent: #f59e0b;
+      }
       * {
         transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
     </style>
 
