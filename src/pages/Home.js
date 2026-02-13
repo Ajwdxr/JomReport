@@ -185,6 +185,14 @@ export default class Home {
                             <span class="text-[10px] font-black ${this.getStatusColor(report.status)} uppercase tracking-widest px-3 py-1 rounded-lg border border-current opacity-80">${report.status}</span>
                         </div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">${sanitizeHTML(report.title)}</h3>
+                        
+                        ${report.address ? `
+                        <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-xs font-medium">
+                            <i class="ri-map-pin-line"></i>
+                            <span class="truncate">${sanitizeHTML(report.address)}</span>
+                        </div>
+                        ` : ''}
+
                         <p class="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 leading-relaxed font-medium">${sanitizeHTML(report.description)}</p>
                         <div class="flex items-center justify-between pt-4 border-t border-gray-50 dark:border-slate-800">
                             <div class="flex items-center gap-2">

@@ -45,6 +45,7 @@ export default class CreateReport {
                                 </button>
                                 <input type="hidden" name="latitude" id="lat">
                                 <input type="hidden" name="longitude" id="lng">
+                                <input type="hidden" name="address" id="address">
                             </div>
                         </div>
 
@@ -126,7 +127,9 @@ export default class CreateReport {
                             }
                         });
                         const data = await response.json();
-                        locText.textContent = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                        const addressStr = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                        locText.textContent = addressStr;
+                        document.getElementById('address').value = addressStr;
                     } catch (error) {
                         console.error('Reverse geocode error:', error);
                         locText.textContent = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
@@ -161,6 +164,7 @@ export default class CreateReport {
                     description: formData.get('description'),
                     latitude: formData.get('latitude'),
                     longitude: formData.get('longitude'),
+                    address: formData.get('address'),
                     image: imageInput.files[0]
                 };
 
@@ -190,7 +194,8 @@ export default class CreateReport {
             description: document.getElementById('description').value,
             latitude: document.getElementById('lat').value,
             longitude: document.getElementById('lng').value,
-            locationText: document.getElementById('location-text').textContent
+            locationText: document.getElementById('location-text').textContent,
+            address: document.getElementById('address').value
         };
         localStorage.setItem('report_form_state', JSON.stringify(state));
     }
@@ -205,6 +210,7 @@ export default class CreateReport {
             if (state.latitude) {
                 document.getElementById('lat').value = state.latitude;
                 document.getElementById('lng').value = state.longitude;
+                document.getElementById('address').value = state.address || state.locationText;
                 const locBtn = document.getElementById('get-location');
                 const locText = document.getElementById('location-text');
                 locText.textContent = state.locationText || "Lokasi Berjaya Diambil";

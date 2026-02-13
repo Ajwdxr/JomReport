@@ -82,6 +82,14 @@ export default class ReportDetail {
                     <span class="text-xs font-bold ${this.getStatusColor(report.status)} px-4 py-1.5 rounded-xl uppercase tracking-wider border">${report.status}</span>
                 </div>
                 <h1 class="text-3xl font-black text-gray-900 dark:text-white leading-tight">${report.title}</h1>
+                
+                ${report.address ? `
+                <div class="flex items-start gap-2 text-gray-500 dark:text-gray-400 font-medium">
+                    <i class="ri-map-pin-line mt-1"></i>
+                    <p>${report.address}</p>
+                </div>
+                ` : ''}
+
                 <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-lg font-medium">${report.description}</p>
             </div>
 

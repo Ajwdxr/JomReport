@@ -48,6 +48,7 @@ export const reportService = {
                 category: reportData.category,
                 latitude: reportData.latitude,
                 longitude: reportData.longitude,
+                address: reportData.address,
                 image_url: image_url,
                 status: 'open'
             }])
@@ -143,6 +144,15 @@ export const reportService = {
             .select();
         if (error) throw error;
         return data[0];
+    },
+
+    async deleteReport(reportId) {
+        const { error } = await supabase
+            .from('reports')
+            .delete()
+            .eq('id', reportId);
+        if (error) throw error;
+        return true;
     },
 
     async getAllReportsAdmin() {
